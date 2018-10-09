@@ -1,0 +1,21 @@
+{
+  "lang": "en",
+  "description": "Programming and japanese language.",
+
+  "home": "home",
+  "programming": "programming",
+
+  "home_content": "<p>Hi, welcome to my website.</p><p>I'm a computer science student who holds interest in languages such as C++, Rust, Haskell and Python. I occasionally publish blog posts about computer science and japanese language. You can access my personal git repositories.</p><p>I'm currently rebuilding my website from scratch using <i>Rust</i> to develop the backend. The source code can be found in my repositories on Github.</p>",
+
+  "date": "date",
+  "title": "title",
+  "path": "path",
+  "japanese_french_only": "French only. I decided to only make articles about japanese in french because there is already more than enough free material in english (not in french).",
+  "programming_index": "<p>This is the index of the \"Programming\" section. The section does not contains only articles on programming but also articles broadly related to computers.</p><p>All available pages below.</p>",
+
+  "english": "english",
+  "french": "french",
+  "japanese": "japanese",
+
+  "paste_placeholder": "Paste your text here."
+}

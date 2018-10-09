@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{core.locals.lang}}">
+    <head>
+        {% block head %}
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="/static/images/logo.png" />
+        <meta name="description" content="{{core.locals.description}}" />
+        <meta name=viewport content='width=460'>
+        <title>Fried World - {% block title %}{{core.locals.description}}{% endblock title %}</title>
+        {% endblock head %}
+    </head>
+
+    <body>
+        <nav class="button">
+            <div style="float: right">
+                <a href="/set-lang/fr?page={{core.uri}}">fr</a>
+                <a href="/set-lang/en?page={{core.uri}}">en</a>
+            </div>
+
+            {% block nav %}
+            <a href="/">{{core.locals.home | capitalize}}</a>
+            <!-- <a href="/about">About</a> -->
+            <a href="/japanese">{{core.locals.japanese | capitalize}}</a>
+            <a href="/programming">{{core.locals.programming | capitalize}}</a>
+            <a href="/paste">Pastebin</a>
+            <a href="https://github.com/CBenoit">GitHub</a>
+            {% endblock nav %}
+        </nav>
+
+        <section>
+            {% block content %}{% endblock content %}
+        </section>
+
+        <footer>
+            {% block footer %}
+            <p style="float: right">© 2016-2018</p>
+            <p>Website proudly powered by <i><a href="https://www.rust-lang.org">Rust</a></i> and <i><a href="https://rocket.rs">Rocket web framework</a></i></p>
+            {% endblock footer %}
+        </footer>
+    </body>
+</html>

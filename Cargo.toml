@@ -1,0 +1,21 @@
+[package]
+name = "fried-world"
+version = "0.1.0"
+authors = ["Benoît CORTIER <benoit.cortier@fried-world.eu>"]
+
+[dependencies]
+rocket = "0.3.*"
+rocket_codegen = "0.3.*"
+rocket_contrib = { version = "*", features = ["json", "tera_templates"] }
+rand = "0.5"
+lazy_static = "1.1.*"
+hoedown = "6.*"
+walkdir = "2.*"
+serde = "1.*"
+serde_derive = "1.*"
+serde_json = "1.*"
+chrono = { version = "0.4", features = ["serde"] }
+
+[features]
+serves_static = []
+

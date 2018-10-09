@@ -1,0 +1,25 @@
+{% extends "base" %}
+
+{% block title %}{{core.locals.programming | capitalize}}{% endblock title %}
+
+{% block content %}
+<article>
+    {{core.locals.programming_index | safe}}
+    {% set url_list_root = "programming" %}
+    {% if core.locals.lang == "en" %}
+        <h2>{{core.locals.english | capitalize}}</h2>
+        {% set selected_lang = "en" %}
+        {% include "category_index" %}
+        <h2>{{core.locals.french | capitalize}}</h2>
+        {% set selected_lang = "fr" %}
+        {% include "category_index" %}
+    {% else %}
+        <h2>{{core.locals.french | capitalize}}</h2>
+        {% set selected_lang = "fr" %}
+        {% include "category_index" %}
+        <h2>{{core.locals.english | capitalize}}</h2>
+        {% set selected_lang = "en" %}
+        {% include "category_index" %}
+    {% endif %}
+</article>
+{% endblock content %}

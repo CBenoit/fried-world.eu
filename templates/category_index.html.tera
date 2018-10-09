@@ -1,0 +1,16 @@
+<table>
+    <tr class="head">
+        <th>{{core.locals.date | capitalize}}</th>
+        <th>{{core.locals.title | capitalize}}</th>
+        <th>{{core.locals.path | capitalize}}</th>
+    </tr>
+    {% for page in pages %}
+    {% if page.date and page.lang == selected_lang %}
+    <tr>
+        <th>{{page.date}}</th>
+        <th><a href="/{{url_list_root}}/{{page.path}}">{{page.title}}</a></th>
+        <th>{{page.path}}</th>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>

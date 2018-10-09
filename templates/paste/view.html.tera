@@ -1,0 +1,11 @@
+{% extends "base" %}
+
+{% block title %}Pastebin - View{% endblock title %}
+
+{% block content %}
+<p><a href="raw/{{id}}" class="button">raw</a></p>
+
+<article>
+    <pre>{{paste}}</pre>
+</article>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends "base" %}
+
+{% block title %}{{page_data.info.title}}{% endblock title %}
+
+{% block content %}
+{% block content_head %}{% endblock content_head %}
+<article class="{{category}}" style="position: relative">
+    <div class="topright">{{page_data.info.date}}</div>
+    {{page_data.content | safe}}
+</article>
+{% endblock content %}

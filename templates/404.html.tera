@@ -1,0 +1,13 @@
+{% extends "base" %}
+
+{% block title %}404 not found{% endblock title %}
+
+{% block content %}
+<article>
+    <h1>404 not found / 存在しない</h1>
+    <p>I was wrong. There is no happiness here.</p>
+    <p>やっと分かった。このページは本当に幸せが見つかることのない場所だった。</p>
+    <img src="/static/images/monika.png" alt="Sad Monika"> (<a href="http://doki-doki-literature-club.wikia.com/wiki/Sprites:Monika">source</a>)
+</article>
+{% endblock content %}
+

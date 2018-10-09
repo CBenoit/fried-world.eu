@@ -1,0 +1,21 @@
+{% extends "base" %}
+
+{% block title %}{{core.locals.japanese | capitalize}}{% endblock title %}
+
+{% block content %}
+<article>
+    <p>{{core.locals.japanese_french_only}}</p>
+
+    <p>Pages importantes :</p>
+    <ul>
+        <li><a href="japanese/wakaru">分かる！Comprendre le japonais.</a></li>
+        <li><a href="japanese/wakaru/feuille-de-route">Feuille de route pour apprendre le japonais</a></li>
+        <li><a href="japanese/exercice">Exercices de japonais</a></li>
+    </ul>
+
+    <p>Toutes les pages disponibles dans cette catégorie :</p>
+    {% set url_list_root = "japanese" %}
+    {% set selected_lang = "fr" %}
+    {% include "category_index" %}
+</article>
+{% endblock content %}

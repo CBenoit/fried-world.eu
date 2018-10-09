@@ -1,0 +1,15 @@
+{% extends "base" %}
+
+{% block title %}Pastebin{% endblock title %}
+
+{% block content %}
+<article>
+    <h1>Fried World's Pastebin</h1>
+
+    <form action="/paste/upload/" method="post">
+        <textarea rows="4" cols="50" name="content" placeholder="{{core.locals.paste_placeholder}}"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</article>
+{% endblock content %}
+

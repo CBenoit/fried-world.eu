@@ -1,0 +1,21 @@
+{
+  "lang": "fr",
+  "description": "Programmation et langue japonaise.",
+
+  "home": "accueil",
+  "programming": "programmation",
+
+  "home_content": "<p>Bonjour, bienvenue sur mon site.</p><p>Je suis étudiant en informatique et porte de l'intérêt pour les languages C++, Rust, Haskell et Python. Je publie occasionnellement des articles à propos de l'informatique et de la langue japonaise. Vous pouvez également accéder à mes dépôts git.</p><p>Je suis actuellement en train de reconstruire mon site de zéro en utilisant <i>Rust</i> pour développer le backend. Le code source se trouve sur Github.</p>",
+
+  "date": "date",
+  "title": "titre",
+  "path": "chemin",
+  "japanese_french_only": "Cette section est en français uniquement. En effet, il y a déjà beaucoup de très bonnes ressources sur la langue japonaise en anglais, mais je croise souvent des apprenants du japonais déplorant un manque du côté de la langue française.",
+  "programming_index": "<p>Voici l'index de la section « Programmation ». Cette section ne contient pas seulement des articles sur la programmation, mais aussi des articles sur l'informatique en général.</p><p>Toutes les pages disponibles se trouvent ci-dessous.</p>",
+
+  "english": "anglais",
+  "french": "français",
+  "japanese": "japonais",
+
+  "paste_placeholder": "Copiez votre texte ici."
+}
