@@ -2,7 +2,7 @@ use std::ffi::OsStr;
 use std::fs::File;
 use std::path::Path;
 use std::path::PathBuf;
-use std::sync::Mutex;
+use std::sync::RwLock;
 use std::time::Duration;
 
 use hoedown::renderer::html::Flags;
@@ -20,7 +20,7 @@ pub mod page;
 pub use self::page::*;
 
 lazy_static! {
-    static ref cacher: Mutex<Cacher<String, PageData>> = Mutex::new(Cacher::new(
+    static ref cacher: RwLock<Cacher<String, PageData>> = RwLock::new(Cacher::new(
         Duration::from_secs(600),
         Duration::from_secs(1000)
     ));
@@ -30,19 +30,27 @@ pub fn make_data_from_markdown(page_name: &str) -> Option<PageData> {
     let page_path = PathBuf::from(format!("{}{}.md", config::MARKDOWN_PATH, page_name));
 
     if Path::new(&page_path).exists() {
-        Some(
-            cacher
-                .lock()
-                .unwrap()
-                .get_or_insert(page_name.to_string(), move || {
-                    let mut file = File::open(&page_path).unwrap();
-                    let info = PageInfo::new(&page_path, &mut file);
-                    let markdown = Markdown::read_from(file);
-                    let mut html = Html::new(Flags::empty(), 0);
-                    PageData::new(info, html.render(&markdown).to_str().unwrap().to_owned())
-                })
-                .clone(),
-        )
+        let read_guard = cacher.read().unwrap();
+        let mut page_data = read_guard.get(&page_name.to_string()).map(|v| v.clone());
+        drop(read_guard);
+
+        if page_data.is_none() {
+            page_data = Some(
+                cacher
+                    .write()
+                    .unwrap()
+                    .get_or_insert(page_name.to_string(), move || {
+                        let mut file = File::open(&page_path).unwrap();
+                        let info = PageInfo::new(&page_path, &mut file);
+                        let markdown = Markdown::read_from(file);
+                        let mut html = Html::new(Flags::empty(), 0);
+                        PageData::new(info, html.render(&markdown).to_str().unwrap().to_owned())
+                    })
+                    .clone(),
+            );
+        }
+
+        page_data
     } else {
         None
     }

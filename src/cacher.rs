@@ -33,6 +33,18 @@ where
     }
 
     /// Retrieve the value associated to the given key.
+    /// None if no value has been inserted yet or if the
+    /// value is expired. Use `get_or_insert` to insert.
+    pub fn get(&self, key: &K) -> Option<&V> {
+        let item = self.data.get(key)?;
+        if Instant::now() - item.time < self.cache_duration {
+            Some(&item.content)
+        } else {
+            None
+        }
+    }
+
+    /// Retrieve the value associated to the given key.
     /// If no value has been inserted yet, the producer function
     /// is used to create the value which is stored and returned.
     pub fn get_or_insert<F>(&mut self, key: K, producer: F) -> &V
@@ -43,18 +55,10 @@ where
             self.cleanup();
         }
 
-        let item = self
-            .data
-            .entry(key)
-            // to refresh cache time of the accessed item (I don't do it because
-            // I want the data renewed once the cache time is exausted).
-            //.and_modify(|v| {
-            //    v.time = Instant::now()
-            //})
-            .or_insert_with(|| Item_ {
-                content: producer(),
-                time: Instant::now(),
-            });
+        let item = self.data.entry(key).or_insert_with(|| Item_ {
+            content: producer(),
+            time: Instant::now(),
+        });
 
         &item.content
     }
@@ -86,6 +90,7 @@ mod tests {
 
         assert_eq!(*cacher.get_or_insert("key", compute_value), "value");
         assert_eq!(*cacher.get_or_insert("key", panic), "value");
+        assert_eq!(cacher.get(&"key"), Some(&"value"));
     }
 
     #[test]
@@ -120,11 +125,15 @@ mod tests {
             "last_clean_instant should have been updated, but it's not."
         );
 
+        assert_eq!(cacher.get(&"key2"), Some(&"value"));
+
         thread::sleep(Duration::from_millis(150));
         cacher.get_or_insert("key2", compute_value);
         assert!(
             !cacher.data.contains_key("key1"),
             "this key should not exist anymore."
         );
+
+        assert_eq!(cacher.get(&"key1"), None);
     }
 }

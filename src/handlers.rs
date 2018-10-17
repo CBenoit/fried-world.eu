@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 use std::path::PathBuf;
-use std::sync::Mutex;
+use std::sync::RwLock;
 use std::time::Duration;
 
 use rocket::http::{Cookie, Cookies};
@@ -14,7 +14,7 @@ use data;
 use lang;
 
 lazy_static! {
-    static ref cacher: Mutex<Cacher<String, Vec<data::PageInfo>>> = Mutex::new(Cacher::new(
+    static ref cacher: RwLock<Cacher<String, Vec<data::PageInfo>>> = RwLock::new(Cacher::new(
         Duration::from_secs(600),
         Duration::from_secs(1000)
     ));
@@ -118,27 +118,38 @@ fn template_category_index(
 ) -> Template {
     let context;
 
-    {
-        let mut guard = cacher.lock().unwrap();
-        let pages_info = guard.get_or_insert(template_name.to_string(), move || {
-            let mut pages_info = data::list_available_pages_from_dir(folder);
-            pages_info.sort_unstable_by(|a, b| {
-                if a.date.is_none() {
-                    Ordering::Less
-                } else if b.date.is_none() {
-                    Ordering::Greater
-                } else {
-                    b.date.unwrap().cmp(&a.date.unwrap())
-                }
-            });
-            pages_info
-        });
+    let mut pages_info = cacher
+        .read()
+        .unwrap()
+        .get(&template_name.to_string())
+        .map(|v| v.clone());
 
-        context = data::IndexPageContext::new(
-            pages_info.clone(),
-            data::CorePageContext::new(local_map, uri),
+    if pages_info.is_none() {
+        pages_info = Some(
+            cacher
+                .write()
+                .unwrap()
+                .get_or_insert(template_name.to_string(), move || {
+                    let mut pages_info = data::list_available_pages_from_dir(folder);
+                    pages_info.sort_unstable_by(|a, b| {
+                        if a.date.is_none() {
+                            Ordering::Less
+                        } else if b.date.is_none() {
+                            Ordering::Greater
+                        } else {
+                            b.date.unwrap().cmp(&a.date.unwrap())
+                        }
+                    });
+                    pages_info
+                })
+                .clone(),
         );
     }
+
+    context = data::IndexPageContext::new(
+        pages_info.unwrap(), // last if branch makes sure page_info is not None.
+        data::CorePageContext::new(local_map, uri),
+    );
 
     Template::render(template_name, context)
 }
