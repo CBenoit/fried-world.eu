@@ -1,5 +1,5 @@
 {% extends "page" %}
 
 {% block content_head %}
-<p><a href="../wakaru" class="button">分かる！index</a></p>
+<p><a href="/japanese/wakaru" class="button">分かる！index</a></p>
 {% endblock content_head %}
