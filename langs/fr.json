@@ -5,7 +5,7 @@
   "home": "accueil",
   "programming": "programmation",
 
-  "home_content": "<p>Bonjour, bienvenue sur mon site.</p><p>Je suis étudiant en informatique et porte de l'intérêt pour les languages C++, Rust, Haskell et Python. Je publie occasionnellement des articles à propos de l'informatique et de la langue japonaise. Vous pouvez également accéder à mes dépôts git.</p><p>Je suis actuellement en train de reconstruire mon site de zéro en utilisant <i>Rust</i> pour développer le backend. Le code source se trouve sur Github.</p>",
+  "home_content": "<p>Bonjour, bienvenue sur mon site.</p><p>Je suis étudiant en informatique et porte de l'intérêt pour les langages C++, Rust, Haskell et Python. Je publie occasionnellement des articles à propos de l'informatique et de la langue japonaise. Vous pouvez également accéder à mes dépôts git.</p><p>Je suis actuellement en train de reconstruire mon site de zéro en utilisant <i>Rust</i> pour développer le backend. Le code source se trouve sur Github.</p>",
 
   "date": "date",
   "title": "titre",
